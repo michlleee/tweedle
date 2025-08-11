@@ -1,69 +1,91 @@
-# React + TypeScript + Vite
+# Tweedle
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Tweedle is a simple social posting web app where users can create posts, comment on others’ posts, and manage their own feed.  
+It’s built with React, Firebase, and TypeScript, focusing on clean design and straightforward user experience.
 
-Currently, two official plugins are available:
+---
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+## Features
 
-## Expanding the ESLint configuration
+- **User Authentication** – Sign in and out using Firebase Authentication.  
+- **Post Creation** – Share text posts with optional profile pictures.  
+- **Comment System** – Add comments directly on posts.  
+- **Feed View** – Browse all posts in a clean, scrollable list.  
+- **Post Management** – Edit or delete your own posts from a dedicated page.  
+- **Responsive UI** – Styled with Tailwind CSS for mobile-friendly layouts.
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+---
 
-```js
-export default tseslint.config([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
+## Tech Stack
 
-      // Remove tseslint.configs.recommended and replace with this
-      ...tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      ...tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      ...tseslint.configs.stylisticTypeChecked,
+- **React** – Frontend framework for building interactive UIs.  
+- **TypeScript** – Static typing for safer, more maintainable code.  
+- **Firebase Authentication** – User login/logout management.  
+- **Firebase Firestore** – Cloud database for posts and comments.  
+- **Tailwind CSS** – Utility-first CSS framework for styling.  
+- **React Router** – Client-side routing for navigation.
 
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+---
+
+## Getting Started
+
+### Prerequisites
+
+- [Node.js](https://nodejs.org/) (v16+ recommended)  
+- [npm](https://www.npmjs.com/) or [Yarn](https://yarnpkg.com/)  
+- A Firebase project with Authentication and Firestore enabled
+
+### Installation
+
+1. **Clone the repository**
+
+   ```bash
+   git clone https://github.com/michlleee/tweedle.git
+   cd tweedle
+   ```
+2. **Install dependencies**
+  ```
+  npm install
+  # or
+  yarn install
+  ```
+3. **Set up Firebase config**
+  Create a file at src/config/firebase.ts and add your Firebase credentials:
+  ```
+import { initializeApp } from "firebase/app";
+import { getAuth } from "firebase/auth";
+import { getFirestore } from "firebase/firestore";
+
+const firebaseConfig = {
+  apiKey: "YOUR_API_KEY",
+  authDomain: "YOUR_AUTH_DOMAIN",
+  projectId: "YOUR_PROJECT_ID",
+  storageBucket: "YOUR_STORAGE_BUCKET",
+  messagingSenderId: "YOUR_MESSAGING_SENDER_ID",
+  appId: "YOUR_APP_ID",
+};
+
+const app = initializeApp(firebaseConfig);
+export const auth = getAuth(app);
+export const db = getFirestore(app);
+  ```
+4. **Run the app*
+   ```
+   npm run dev
+    # or
+    yarn dev
+    ```
+
+## Project Structure
 ```
-
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
-
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
-
-export default tseslint.config([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+tweedle/
+├── src/
+│   ├── components/       # UI components (forms, buttons, etc.)
+│   ├── pages/            # Main pages (Home, Manage Posts, etc.)
+│   ├── assets/           # Images and icons
+│   ├── config/           # Firebase configuration
+│   └── App.tsx           # App entry point
+├── public/               # Static assets
+├── package.json
+└── vite.config.ts
 ```
