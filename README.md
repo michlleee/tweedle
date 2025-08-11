@@ -38,38 +38,37 @@ It’s built with React, Firebase, and TypeScript, focusing on clean design and 
 ### Installation
 
 1. **Clone the repository**
-
    ```bash
    git clone https://github.com/michlleee/tweedle.git
    cd tweedle
    ```
 2. **Install dependencies**
-  ```
-  npm install
-  # or
-  yarn install
-  ```
+   ```
+   npm install
+   # or
+   yarn install
+   ```
 3. **Set up Firebase config**
-  Create a file at src/config/firebase.ts and add your Firebase credentials:
-  ```
-import { initializeApp } from "firebase/app";
-import { getAuth } from "firebase/auth";
-import { getFirestore } from "firebase/firestore";
-
-const firebaseConfig = {
-  apiKey: "YOUR_API_KEY",
-  authDomain: "YOUR_AUTH_DOMAIN",
-  projectId: "YOUR_PROJECT_ID",
-  storageBucket: "YOUR_STORAGE_BUCKET",
-  messagingSenderId: "YOUR_MESSAGING_SENDER_ID",
-  appId: "YOUR_APP_ID",
-};
-
-const app = initializeApp(firebaseConfig);
-export const auth = getAuth(app);
-export const db = getFirestore(app);
-  ```
-4. **Run the app*
+   Create a file at src/config/firebase.ts and add your Firebase credentials:
+   ```
+   import { initializeApp } from "firebase/app";
+   import { getAuth } from "firebase/auth";
+   import { getFirestore } from "firebase/firestore";
+   
+   const firebaseConfig = {
+   apiKey: "YOUR_API_KEY",
+   authDomain: "YOUR_AUTH_DOMAIN",
+   projectId: "YOUR_PROJECT_ID",
+   storageBucket: "YOUR_STORAGE_BUCKET",
+   messagingSenderId: "YOUR_MESSAGING_SENDER_ID",
+   appId: "YOUR_APP_ID",
+   };
+   
+   const app = initializeApp(firebaseConfig);
+   export const auth = getAuth(app);
+   export const db = getFirestore(app);
+   ```
+4. **Run the app**
    ```
    npm run dev
     # or
@@ -77,15 +76,15 @@ export const db = getFirestore(app);
     ```
 
 ## Project Structure
-```
-tweedle/
-├── src/
-│   ├── components/       # UI components (forms, buttons, etc.)
-│   ├── pages/            # Main pages (Home, Manage Posts, etc.)
-│   ├── assets/           # Images and icons
-│   ├── config/           # Firebase configuration
-│   └── App.tsx           # App entry point
-├── public/               # Static assets
-├── package.json
-└── vite.config.ts
-```
+   ```
+   tweedle/
+   ├── src/
+   │   ├── components/       # UI components (forms, buttons, etc.)
+   │   ├── pages/            # Main pages (Home, Manage Posts, etc.)
+   │   ├── assets/           # Images and icons
+   │   ├── config/           # Firebase configuration
+   │   └── App.tsx           # App entry point
+   ├── public/               # Static assets
+   ├── package.json
+   └── vite.config.ts
+   ```
