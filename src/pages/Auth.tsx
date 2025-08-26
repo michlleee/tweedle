@@ -1,5 +1,10 @@
 import { auth, googleProvider } from "../config/firebase.ts";
-import { signInWithRedirect, onAuthStateChanged } from "firebase/auth";
+import {
+  signInWithRedirect,
+  getRedirectResult,
+  onAuthStateChanged,
+  signInWithPopup,
+} from "firebase/auth";
 import {
   doc,
   setDoc,
