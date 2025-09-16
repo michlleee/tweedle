@@ -138,9 +138,7 @@ function Home() {
 
     const postRef = doc(db, "posts", post.id);
     const userRef = doc(db, "users", loggedInUser.uid);
-    // change state of like
-    // increment number of likes for selected post
-    // add post id to the postLiked array in user data
+
     if (likedPosts.includes(post.id)) {
       await updateDoc(postRef, { likes: increment(-1) });
       await updateDoc(userRef, { postsLiked: arrayRemove(post.id) });
