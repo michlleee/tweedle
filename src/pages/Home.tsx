@@ -1,16 +1,21 @@
 import { auth, db } from "../config/firebase";
 import { useEffect, useState } from "react";
 import {
+  arrayRemove,
+  arrayUnion,
   collection,
   doc,
   getDoc,
   getDocs,
+  increment,
   Timestamp,
+  updateDoc,
 } from "firebase/firestore";
 
 import NewPost from "../components/NewPost";
 import defaultPofile from "../assets/defaultProfile.jpg";
 import heartIcon from "../assets/heart.svg";
+import heartFullIcon from "../assets/heart_full.svg";
 import commentIcon from "../assets/comment-1-svgrepo-com.svg";
 import CommentForm from "../components/CommentForm";
 import Ylogo from "../components/Ylogo";
@@ -52,6 +57,7 @@ function Home() {
   const [logoutPopUp, setLogoutPopUp] = useState(false);
   const [commentPost, setCommentPost] = useState<Post | null>(null);
   const [loggedInUser, setLoggedInUser] = useState<LoggedInUser | null>(null);
+  const [likedPosts, setLikedPosts] = useState<string[]>([]);
 
   const postsCollectionRef = collection(db, "posts");
   const navigate = useNavigate();
@@ -124,8 +130,34 @@ function Home() {
     getPostsList();
   };
 
-  const handleLike = () => {
-    console.log("liked");
+  const handleLike = async (post: Post) => {
+    if (!loggedInUser) {
+      console.error("User not logged in");
+      return;
+    }
+
+    const postRef = doc(db, "posts", post.id);
+    const userRef = doc(db, "users", loggedInUser.uid);
+    // change state of like
+    // increment number of likes for selected post
+    // add post id to the postLiked array in user data
+    if (likedPosts.includes(post.id)) {
+      await updateDoc(postRef, { likes: increment(-1) });
+      await updateDoc(userRef, { postsLiked: arrayRemove(post.id) });
+      setLikedPosts((prev) => prev.filter((id) => id !== post.id));
+
+      setPostsList((prev) =>
+        prev.map((p) => (p.id === post.id ? { ...p, likes: p.likes - 1 } : p))
+      );
+    } else {
+      await updateDoc(postRef, { likes: increment(1) });
+      await updateDoc(userRef, { postsLiked: arrayUnion(post.id) });
+      setLikedPosts((prev) => [...prev, post.id]);
+
+      setPostsList((prev) =>
+        prev.map((p) => (p.id === post.id ? { ...p, likes: p.likes + 1 } : p))
+      );
+    }
   };
 
   const handleLogout = async () => {
@@ -137,6 +169,12 @@ function Home() {
       console.error(error);
     }
   };
+
+  useEffect(() => {
+    if (loggedInUser) {
+      setLikedPosts(loggedInUser.postsLiked || []);
+    }
+  }, [loggedInUser]);
 
   return (
     <>
@@ -202,11 +240,13 @@ function Home() {
                     className="ml-1 p-1 rounded outline-1 outline-transparent hover:outline-red-200 hover:bg-red-400/80 hover:scale-110 transition ease-in-out duration-200"
                     aria-label="Likes"
                     onClick={() => {
-                      handleLike();
+                      handleLike(post);
                     }}
                   >
                     <img
-                      src={heartIcon}
+                      src={
+                        likedPosts.includes(post.id) ? heartFullIcon : heartIcon
+                      }
                       alt="heart button"
                       className="w-5 h-5"
                     />
