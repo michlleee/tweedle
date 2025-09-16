@@ -10,6 +10,7 @@ import {
 
 import NewPost from "../components/NewPost";
 import defaultPofile from "../assets/defaultProfile.jpg";
+import heartIcon from "../assets/heart.svg";
 import commentIcon from "../assets/comment-1-svgrepo-com.svg";
 import CommentForm from "../components/CommentForm";
 import Ylogo from "../components/Ylogo";
@@ -23,6 +24,7 @@ export type LoggedInUser = {
   photoUrl: string;
   email: string;
   createdAt: Timestamp;
+  postsLiked: string[];
 };
 
 type Comment = {
@@ -41,6 +43,7 @@ export type Post = {
   comments: Comment[];
   timestamp: Timestamp;
   photoUrl: string;
+  likes: number;
 };
 
 function Home() {
@@ -85,6 +88,7 @@ function Home() {
           userId: docData.userId,
           username: docData.username,
           content: docData.content,
+          likes: docData.likes,
           comments: docData.comments,
           timestamp: docData.timestamp,
           photoUrl: docData.photoUrl,
@@ -118,6 +122,10 @@ function Home() {
 
   const updatePostInList = () => {
     getPostsList();
+  };
+
+  const handleLike = () => {
+    console.log("liked");
   };
 
   const handleLogout = async () => {
@@ -172,7 +180,7 @@ function Home() {
                   {post.content}
                 </p>
 
-                <div className="flex gap-3">
+                <div className="flex gap-1">
                   <button
                     type="button"
                     className="p-1 rounded outline-1 outline-transparent hover:outline-blue-200 hover:bg-cyan-500/80 hover:scale-110 transition ease-in-out duration-200"
@@ -184,20 +192,65 @@ function Home() {
                     <img
                       src={commentIcon}
                       alt="comment button"
-                      className="w-5 h-5"
+                      className="w-4 h-4"
                     />
                   </button>
                   <p className="py-1 text-sm">{post.comments.length}</p>
+
+                  <button
+                    type="button"
+                    className="ml-1 p-1 rounded outline-1 outline-transparent hover:outline-red-200 hover:bg-red-400/80 hover:scale-110 transition ease-in-out duration-200"
+                    aria-label="Likes"
+                    onClick={() => {
+                      handleLike();
+                    }}
+                  >
+                    <img
+                      src={heartIcon}
+                      alt="heart button"
+                      className="w-5 h-5"
+                    />
+                  </button>
+                  <p className="py-1 text-sm">{post.likes}</p>
                 </div>
 
                 {post.comments.length > 0 && (
-                  <div className="text-sm pt-3 flex justify-center cursor-pointer">
-                    <a
-                      className="underline decoration-solid"
-                      href={"/comments/" + post.id}
-                    >
-                      View more comments
-                    </a>
+                  <div className="border-t border-gray-600 mt-6">
+                    {post.comments.slice(0, 2).map((comment, index) => (
+                      <div
+                        key={index}
+                        className="flex items-start gap-2 py-4 border-b border-gray-600 last:border-none"
+                      >
+                        <img
+                          src={comment.photoUrl || defaultPofile}
+                          alt={comment.username}
+                          className="w-8 h-8 rounded-full"
+                        />
+
+                        <div className="flex flex-col">
+                          <span className="font-semibold text-sm text-gray-200">
+                            @{comment.username} ·{" "}
+                            <span className="text-gray-500">
+                              {comment.createdAt.toDate().toLocaleString()}
+                            </span>
+                          </span>
+                          <p className="text-sm text-gray-400">
+                            {comment.content}
+                          </p>
+                        </div>
+                      </div>
+                    ))}
+
+                    {post.comments.length > 2 && (
+                      <div className="text-sm pt-3 flex justify-center cursor-pointer">
+                        <a
+                          className="underline decoration-solid"
+                          href={"/comments/" + post.id}
+                        >
+                          View more comments
+                        </a>
+                      </div>
+                    )}
                   </div>
                 )}
               </div>
