@@ -4,7 +4,7 @@ Tweedle is a simple social posting web app where users can create posts, comment
 It’s built with React, Firebase, and TypeScript, focusing on clean design and straightforward user experience.
 
 <img width="1909" height="902" alt="image" src="https://github.com/user-attachments/assets/d8d735db-f53b-4467-aabb-76074352ea36" />
-<img width="1895" height="901" alt="image" src="https://github.com/user-attachments/assets/6324ce4e-3ead-432d-bbff-2289a9b85ec5" />
+<img width="1915" height="903" alt="image" src="https://github.com/user-attachments/assets/e56edc4a-cfbd-4775-9a56-ed69467ad4c8" />
 ps: that long rant text was ai generated.
 
 ---
@@ -13,7 +13,7 @@ ps: that long rant text was ai generated.
 
 - **User Authentication** – Sign in and out using Firebase Authentication.  
 - **Post Creation** – Share text posts with optional profile pictures.  
-- **Comment System** – Add comments directly on posts.  
+- **Comment & Liking System** – Add comments or like directly on posts.  
 - **Feed View** – Browse all posts in a clean, scrollable list.  
 - **Post Management** – Edit or delete your own posts from a dedicated page.  
 - **Responsive UI** – Styled with Tailwind CSS for mobile-friendly layouts.
