@@ -3,6 +3,8 @@
 Tweedle is a simple social posting web app where users can create posts, comment on others’ posts, and manage their own feed.  
 It’s built with React, Firebase, and TypeScript, focusing on clean design and straightforward user experience.
 
+Checkout the web here --> https://tweedle-kappa.vercel.app/
+
 <img width="1909" height="902" alt="image" src="https://github.com/user-attachments/assets/d8d735db-f53b-4467-aabb-76074352ea36" />
 <img width="1915" height="903" alt="image" src="https://github.com/user-attachments/assets/e56edc4a-cfbd-4775-9a56-ed69467ad4c8" />
 ps: that long rant text was ai generated.
